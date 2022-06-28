@@ -12,9 +12,9 @@
             <div class="ons-grid__col ons-col-auto ons-u-flex-shrink">
                 <p class="ons-phase-banner__desc">
                     {#if phase == "Prototype"}
-                    This is a protoype – to help improve it please <a href="{url}">give us your feedback</a>
+                    This is a protoype – to help improve it please <a href="{url}" rel="external">give us your feedback</a>
                     {:else}
-                    This is a new service – to help improve it please <a href="{url}">give us your feedback</a>
+                    This is a new service – to help improve it please <a href="{url}" rel="external">give us your feedback</a>
                     {/if}
                 </p>
             </div>
