@@ -46,10 +46,12 @@
     "releaseDate": "20220624",
     "contentType": "exploratory"
   };
+
+  const survey_url = "https://www.surveymonkey.co.uk/r/N3FKCL9";
 </script>
 
 <AnalyticsBanner {analyticsId} {analyticsProps}/>
-<PhaseBanner/>
+<PhaseBanner url={survey_url}/>
 
 <header style:background-color="#206095" style:color="white">
   <div class="wrapper">
@@ -63,10 +65,10 @@
 
 <ONSFooterLite>
   <p class="footer-text">
-    This prototype is made using historical census datasets covering areas in England and Wales from 1981 to 2011 (<a href="https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/adhocs/14796ct1214sextimeseriescensus1981to2011">1</a>, <a href="https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/adhocs/14797ct1215agetimeseriescensus1981to2011">2</a>, <a href="https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/adhocs/14798ct1216sexbyagetimeseriescensus1981to2011">3</a>, <a href="https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/adhocs/14799ct1217populationdensitytimeseriescensus1981to2011">4</a>), and geographic data from the <a href="https://geoportal.statistics.gov.uk/" target="_blank">ONS Open Geography Portal</a>. It will be updated on 28 June to include the latest 2021 Census data. Population counts should match published ONS datasets, but percentage figures are not official.
+    This prototype is made using a historical census timeseries dataset covering areas in England and Wales from 1981 up to the most recent 2021 Census (<a href="https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/adhocs/14812ct210002sextimeseriescensus1981to2021">1</a>, <a href="https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/adhocs/14813ct210003agetimeseriescensus1981to2021">2</a>, <a href="https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/adhocs/14814ct210004sexbyagetimeseriescensus1981to2021">3</a>, <a href="https://www.ons.gov.uk/peoplepopulationandcommunity/populationandmigration/populationestimates/adhocs/14815ct210005populationdensitytimeseriescensus1981to2021">4</a>), and geographic data from the <a href="https://geoportal.statistics.gov.uk/" target="_blank">ONS Open Geography Portal</a>. Population counts should match published ONS datasets, which are rounded to the nearest 100 people for the latest 2021 census. However, percentage figures are not official.
   </p>
   <p class="footer-text">
-    This project is a work in progress by the ONS digital content team, and may not lead to a final product. If you have any comments or suggestions please <a href="https://www.ons.gov.uk/feedback">share them here</a>, or send a tweet/DM to project lead <a href="https://twitter.com/bothness">Ahmad Barclay</a>. This page was coded using Svelte Kit and Maplibre GL, and the source code can be <a href="https://github.com/bothness/censusprofiles">found here</a>.
+    This project is a work in progress by the ONS digital content team, and may not lead to a final product. If you have any comments or suggestions please <a href="{survey_url}">share them here</a>, or send a tweet/DM to project lead <a href="https://twitter.com/bothness">Ahmad Barclay</a>. This page was coded using Svelte Kit and Maplibre GL, and the source code can be <a href="https://github.com/bothness/censusprofiles">found here</a>.
   </p>
 </ONSFooterLite>
 

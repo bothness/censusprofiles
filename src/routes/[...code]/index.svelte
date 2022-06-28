@@ -41,8 +41,8 @@
 	import Titleblock from "$lib/layout/Titleblock.svelte";
 	import Headline from "$lib/layout/partial/Headline.svelte";
 	import Content from "$lib/layout/Content.svelte";
-	import Tiles from "$lib/layout/Cards.svelte";
-	import Tile from "$lib/layout/partial/Card.svelte";
+	import Cards from "$lib/layout/Cards.svelte";
+	import Card from "$lib/layout/partial/Card.svelte";
 	import Em from "$lib/ui/Em.svelte";
 	import Select from "$lib/ui/Select.svelte";
 	import Icon from "$lib/ui/Icon.svelte";
@@ -73,7 +73,7 @@
 
 		if (yr && years.includes(+yr)) {
 			year = yr;
-		} else {
+		} else if (place) {
 			goto(`${base}/${place.areacd}/?year=${years[years.length - 1]}`, {noscroll: true});
 		}
 
@@ -129,8 +129,7 @@
 		}
 	}
 	function mapSelect(e) {
-		console.log(e.detail.feature.properties.areanm);
-		if (window.dataLayer) window.dataLayer.push({event: "nameSelect", name: e.detail.feature.properties.areanm, code: e.detail.id});
+		if (window.dataLayer && e.detail.feature) window.dataLayer.push({event: "nameSelect", name: e.detail.feature.properties.areanm, code: e.detail.id});
 		navTo(e.detail.id);
 	}
 </script>
@@ -138,7 +137,7 @@
 <svelte:head>
 	<title>{place ? `${place.areanm} census profile` : 'Census area profiles'}</title>
 	<link rel="icon" href="{assets}/favicon.ico" />
-	<meta property="og:title" content="Census area profiles" />
+	<meta property="og:title" content="{place ? `${place.areanm} census profile` : 'Census area profiles'}" />
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content="{place ? `${assets}/${place.areacd}/` : `${assets}/`}" />
 	<meta property="og:image" content="{assets}/img/og.png" />
@@ -172,7 +171,7 @@
 </Titleblock>
 
 <Content>
-	<Tiles title="Demographic data for {place.areanm}">
+	<Cards title="Demographic data for {place.areanm}">
 		<span slot="meta">
 			<select on:change={e => goto(`${base}/${place.areacd}/?year=${e.target.value}`, {noscroll: true})}>
 				{#each years as y}
@@ -180,7 +179,7 @@
 				{/each}
 			</select>
 		</span>
-		<Tile title="Population">
+		<Card title="Population">
 			<div class="num-big">
 				{format(',')(place.data.population[`${year}`])}
 				{#if count > 1}
@@ -194,8 +193,8 @@
 			{#if place.areacd != "K04000001"}
 			<div class="num-desc"><Em color="lightgrey">{suffixer(place.data.population[`${year}_rank`])} largest</Em> of {count} {type.plural} in {lookup[type.parent].areanm}</div>
 			{/if}
-		</Tile>
-		<Tile title="10 year change">
+		</Card>
+		<Card title="10 year change">
 			<div class="num-big">
 				{#if place.data.population[`${year}_change`]}
 				{plusminus(place.data.population[`${year}_change`])}{format('.1f')(Math.abs(place.data.population[`${year}_change`]))}%
@@ -219,11 +218,11 @@
 				{/if}
 			</div>
 			{/if}
-		</Tile>
-		<Tile title="Change since 1981">
+		</Card>
+		<Card title="Change since 1981">
 			<LineChart data={place.areacd == "K04000001" ? [place.data.population] : [place.data.population, ew.data.population]} zKey="areanm" xDomain={years} xVal={year}/>
-		</Tile>
-		<Tile title="Density">
+		</Card>
+		<Card title="Density">
 			<div class="num-big">
 				{format(',.0f')(place.data.density[`${year}`])}
 				{#if count > 1}
@@ -237,17 +236,17 @@
 			{#if place.areacd != "K04000001"}
 			<div class="num-desc"><Em color="lightgrey">{suffixer(place.data.density[`${year}_rank`])} densest</Em> of {count} {type.plural} in {lookup[type.parent].areanm}</div>
 			{/if}
-		</Tile>
-		<Tile title="Age profile">
+		</Card>
+		<Card title="Age profile">
 			<ProfileChart data={place.areacd == "K04000001" ? place.data.age : [...place.data.age, ...ew.data.age]} xKey="category" yKey="{year}_perc" zKey="areanm"/>
-		</Tile>
-		<Tile title="Sex">
+		</Card>
+		<Card title="Sex">
 			<BarChart data={place.areacd == "K04000001" ? place.data.sex : [...place.data.sex, ...ew.data.sex]} xKey="{year}_perc" yKey="category" zKey="areanm"/>
-		</Tile>
-	</Tiles>
+		</Card>
+	</Cards>
 
-	<Tiles title="Explore related areas">
-		<Tile colspan={2} rowspan={2} blank>
+	<Cards title="Explore related areas">
+		<Card colspan={2} rowspan={2} blank>
 			<div style:height="450px">
 				<Map bind:map style="{base}/data/mapstyle.json" location={{bounds: place.bounds}} options={{fitBoundsOptions: {padding: 20}, maxBounds: [-12,47,7,62]}} controls>
 					{#each mapsources as s}
@@ -286,8 +285,8 @@
 					{/each}
 				</Map>
 			</div>
-		</Tile>
-		<Tile title="Parent areas of {place.areanm}">
+		</Card>
+		<Card title="Parent areas of {place.areanm}">
 			{#if place.parents[0]}
 			{#each [...place.parents].reverse() as parent, i}
 			<span class="parent" style:margin-left="{i == 0 ? 0 : `${(i - 1) * 20}px`}">
@@ -298,8 +297,8 @@
 			{:else}
 			<span class="muted">No parent areas</span>
 			{/if}
-		</Tile>
-		<Tile title="Areas in {place.areanm}">
+		</Card>
+		<Card title="Areas in {place.areanm}">
 			{#if place.children[0]}
 			{#each place.children as child, i}
 			<a href="{base}/{child.areacd}/?year={year}" sveltekit:noscroll>{child.areanm}</a>{i == place.children.length - 1 ? '' : ', '} 
@@ -307,12 +306,12 @@
 			{:else}
 			<span class="muted">No areas available within {place.areanm}</span>
 			{/if}
-		</Tile>
-	</Tiles>
+		</Card>
+	</Cards>
 </Content>
 {:else if !place}
 <Content>
-	<a class="redirect" href="{base}/K04000001/?year=${years[years.length - 1]}">Redirecting...</a>
+	<a class="redirect" href="{base}/K04000001/?year=${years[years.length - 1]}">Loading England and Wales...</a>
 </Content>
 {/if}
 

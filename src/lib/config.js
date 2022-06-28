@@ -16,7 +16,7 @@ export const themes = {
   }
 };
 
-export const years = [1981, 1991, 2001, 2011];
+export const years = [1981, 1991, 2001, 2011, 2021];
 
 export const types = [
 	{key: "ew", codes: ["K04"], count: 1},
