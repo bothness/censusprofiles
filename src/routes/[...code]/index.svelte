@@ -144,6 +144,9 @@
 	<meta property="og:image:type" content="image/png" />
 	<meta name="description" content="{place ? `Explore census data through time for ${place.areanm}` : 'Explore census data through time for places in England and Wales'}">
 	<meta property="og:description" content="{place ? `Explore census data through time for ${place.areanm}` : 'Explore census data through time for places in England and Wales'}" />
+	{#if !place}
+	<meta name="google-site-verification" content="bOaidjIuCmXziEqN28CxFcoWHBVn8vQo6uekfAZZx6o" />
+	{/if}
 </svelte:head>
 
 {#if place && year}
