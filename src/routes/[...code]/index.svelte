@@ -135,15 +135,15 @@
 </script>
 
 <svelte:head>
-	<title>{place ? `${place.areanm} census profile` : 'Census area profiles'}</title>
+	<title>{place ? `${place.areanm} census profile` : 'Census area profiles'} - {years[0]} to {years[years.length - 1]}</title>
 	<link rel="icon" href="{assets}/favicon.ico" />
-	<meta property="og:title" content="{place ? `${place.areanm} census profile` : 'Census area profiles'}" />
+	<meta property="og:title" content="{place ? `${place.areanm} census profile` : 'Census area profiles'} - {years[0]} to {years[years.length - 1]}" />
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content="{place ? `${assets}/${place.areacd}/` : `${assets}/`}" />
 	<meta property="og:image" content="{assets}/img/og.png" />
 	<meta property="og:image:type" content="image/png" />
-	<meta name="description" content="{place ? `Explore census data through time for ${place.areanm}` : 'Explore census data through time for places in England and Wales'}">
-	<meta property="og:description" content="{place ? `Explore census data through time for ${place.areanm}` : 'Explore census data through time for places in England and Wales'}" />
+	<meta name="description" content="{place ? `Explore census data for ${place.areanm}, from ${years[0]} to ${years[years.length - 1]}` : `Explore census data through time for places in England and Wales, from ${years[0]} to ${years[years.length - 1]}`}">
+	<meta property="og:description" content="{place ? `Explore census data for ${place.areanm}, from ${years[0]} to ${years[years.length - 1]}` : `Explore census data through time for places in England and Wales, from ${years[0]} to ${years[years.length - 1]}`}" />
 	{#if !place}
 	<meta name="google-site-verification" content="bOaidjIuCmXziEqN28CxFcoWHBVn8vQo6uekfAZZx6o" />
 	{/if}
