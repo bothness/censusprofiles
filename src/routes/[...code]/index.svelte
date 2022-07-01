@@ -25,7 +25,7 @@
 			child_type = type_i == types.length - 1 ? null : place.areacd == "W92000004" ? types[type_i + 2] : types[type_i + 1];
 		}
 		
-    	return {
+    return {
 			props: { places, lookup, place, ew, type, child_type, count }
 		}
 	}
@@ -61,7 +61,7 @@
 
 	onMount(() => {
 		if (!place) {
-			goto(`${base}/K04000001/?year=${years[years.length - 1]}`);
+			goto(`${base}/${ew.areacd}/?year=${years[years.length - 1]}`);
 		} else {
 			let yr = $page.url.searchParams.get('year');
 			year = yr ? yr : years[years.length - 1];
@@ -152,11 +152,11 @@
 {#if place && year}
 <Titleblock
 	background="none"
-	breadcrumb="{place.areacd == "K04000001" ? [] : [...[...place.parents].reverse().map(p => ({label: p.areanm, url: `${base}/${p.areacd}/?year=${year}`})), {label: place.areanm}]}">
+	breadcrumb="{place.areacd == ew.areacd ? [] : [...[...place.parents].reverse().map(p => ({label: p.areanm, url: `${base}/${p.areacd}/?year=${year}`})), {label: place.areanm}]}">
 	<Headline>{place.areanm}</Headline>
 	<Select items={places} mode="search" idKey="areacd" labelKey="areanm" {placeholder} bind:filterText loadOptions={getPostcodes} autoClear on:select={doSelect}/>
 	<p class="subtitle">
-		{#if place.areacd != "K04000001"}
+		{#if place.areacd != ew.areacd}
 		<strong>{place.areanm}</strong> <small>({place.areacd})</small> is a {type.label_lng ? type.label_lng : type.label} in {place.parents[0].areanm}.
 		The {type.label}'s population of {format(',')(place.data.population[`${year}`])} at the time of the {year} census made it the {suffixer(place.data.population[`${year}_rank`])} largest in {lookup[type.parent].areanm}.
 		{#if place.data.population[`${year}_change`]}
@@ -193,7 +193,7 @@
 				{/if}
 			</div>
 			<div class="num-suffix">people in {year}</div>
-			{#if place.areacd != "K04000001"}
+			{#if place.areacd != ew.areacd}
 			<div class="num-desc"><Em color="lightgrey">{suffixer(place.data.population[`${year}_rank`])} largest</Em> of {count} {type.plural} in {lookup[type.parent].areanm}</div>
 			{/if}
 		</Card>
@@ -212,7 +212,7 @@
 				{/if}
 			</div>
 			<div class="num-suffix">{plusminus(place.data.population[`${year}_change`], ["more people than", "fewer people than", "compared to"])} {year - 10}</div>
-			{#if place.areacd != "K04000001"}
+			{#if place.areacd != ew.areacd}
 			<div class="num-desc">
 				{#if place.data.population[`${year}_change`]}
 				<Em color="lightgrey">{suffixer(place.data.population[`${year}_change_rank`])} largest increase</Em> of {count} {type.plural} in {lookup[type.parent].areanm}
@@ -223,7 +223,7 @@
 			{/if}
 		</Card>
 		<Card title="Change since 1981">
-			<LineChart data={place.areacd == "K04000001" ? [place.data.population] : [place.data.population, ew.data.population]} zKey="areanm" xDomain={years} xVal={year}/>
+			<LineChart data={place.areacd == ew.areacd ? [place.data.population] : [place.data.population, ew.data.population]} zKey="areanm" xDomain={years} xVal={year}/>
 		</Card>
 		<Card title="Density">
 			<div class="num-big">
@@ -236,15 +236,15 @@
 				{/if}
 			</div>
 			<div class="num-suffix">people per square km</div>
-			{#if place.areacd != "K04000001"}
+			{#if place.areacd != ew.areacd}
 			<div class="num-desc"><Em color="lightgrey">{suffixer(place.data.density[`${year}_rank`])} densest</Em> of {count} {type.plural} in {lookup[type.parent].areanm}</div>
 			{/if}
 		</Card>
 		<Card title="Age profile">
-			<ProfileChart data={place.areacd == "K04000001" ? place.data.age : [...place.data.age, ...ew.data.age]} xKey="category" yKey="{year}_perc" zKey="areanm"/>
+			<ProfileChart data={place.areacd == ew.areacd ? place.data.age : [...place.data.age, ...ew.data.age]} xKey="category" yKey="{year}_perc" zKey="areanm"/>
 		</Card>
 		<Card title="Sex">
-			<BarChart data={place.areacd == "K04000001" ? place.data.sex : [...place.data.sex, ...ew.data.sex]} xKey="{year}_perc" yKey="category" zKey="areanm"/>
+			<BarChart data={place.areacd == ew.areacd ? place.data.sex : [...place.data.sex, ...ew.data.sex]} xKey="{year}_perc" yKey="category" zKey="areanm"/>
 		</Card>
 	</Cards>
 
@@ -314,7 +314,7 @@
 </Content>
 {:else if !place}
 <Content>
-	<a class="redirect" href="{base}/K04000001/?year=${years[years.length - 1]}">Loading England and Wales...</a>
+	<a class="redirect" href="{base}/{ew.areacd}/?year=${years[years.length - 1]}">Loading England and Wales...</a>
 </Content>
 {/if}
 
