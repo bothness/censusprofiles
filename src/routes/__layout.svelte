@@ -55,7 +55,7 @@
 
 <header style:background-color="#206095" style:color="white">
   <div class="wrapper">
-    <h1 class="title">Census area profiles, {years[0]} to {years[years.length - 1]}</h1>
+    <h1 class="title">Census population profiles, {years[0]} to {years[years.length - 1]}</h1>
   </div>
 </header>
 
