@@ -45,7 +45,7 @@
 		if (yr && years.includes(+yr)) {
 			year = yr;
 		} else if (place) {
-			goto(`${base}/${place.areacd}/?year=${years[years.length - 1]}`, {noscroll: true});
+			goto(`${base}/${place.areacd}/?year=${years[years.length - 1]}`, {noScroll: true});
 		}
 
 		if (map) map.fitBounds(place.bounds, {padding: 20});
@@ -62,7 +62,7 @@
 	// Functions etc
 	function navTo(code) {
 		if (code && code != place.areacd) {
-			goto(`${base}/${code}/?year=${year}`, {noscroll: true});
+			goto(`${base}/${code}/?year=${year}`, {noScroll: true});
 		}
 	}
 
@@ -147,7 +147,7 @@
 <Content>
 	<Cards title="Demographic data for {place.areanm}">
 		<span slot="meta">
-			<select on:change={e => goto(`${base}/${place.areacd}/?year=${e.target.value}`, {noscroll: true})}>
+			<select on:change={e => goto(`${base}/${place.areacd}/?year=${e.target.value}`, {noScroll: true})}>
 				{#each years as y}
 				<option value={y} selected={y == year}>Census {y}</option>
 				{/each}
@@ -158,8 +158,8 @@
 				{format(',')(place.data.population[`${year}`])}
 				{#if count > 1}
 				<div class="btn-group">
-					<button class="btn-chevron" disabled={!place.data.population[`${year}_next`]} on:click={() => goto(`${base}/${place.data.population[`${year}_next`]}/?year=${year}`, {noscroll: true})}><Icon type="chevron" rotation={90}/></button>
-					<button class="btn-chevron" disabled={!place.data.population[`${year}_prev`]} on:click={() => goto(`${base}/${place.data.population[`${year}_prev`]}/?year=${year}`, {noscroll: true})}><Icon type="chevron" rotation={-90}/></button>
+					<button class="btn-chevron" disabled={!place.data.population[`${year}_next`]} on:click={() => goto(`${base}/${place.data.population[`${year}_next`]}/?year=${year}`, {noScroll: true})}><Icon type="chevron" rotation={90}/></button>
+					<button class="btn-chevron" disabled={!place.data.population[`${year}_prev`]} on:click={() => goto(`${base}/${place.data.population[`${year}_prev`]}/?year=${year}`, {noScroll: true})}><Icon type="chevron" rotation={-90}/></button>
 				</div>
 				{/if}
 			</div>
@@ -177,8 +177,8 @@
 				{/if}
 				{#if count > 1}
 				<div class="btn-group">
-					<button class="btn-chevron" disabled={!place.data.population[`${year}_change_next`]} on:click={() => goto(`${base}/${place.data.population[`${year}_change_next`]}/?year=${year}`, {noscroll: true})}><Icon type="chevron" rotation={90}/></button>
-					<button class="btn-chevron" disabled={!place.data.population[`${year}_change_prev`]} on:click={() => goto(`${base}/${place.data.population[`${year}_change_prev`]}/?year=${year}`, {noscroll: true})}><Icon type="chevron" rotation={-90}/></button>
+					<button class="btn-chevron" disabled={!place.data.population[`${year}_change_next`]} on:click={() => goto(`${base}/${place.data.population[`${year}_change_next`]}/?year=${year}`, {noScroll: true})}><Icon type="chevron" rotation={90}/></button>
+					<button class="btn-chevron" disabled={!place.data.population[`${year}_change_prev`]} on:click={() => goto(`${base}/${place.data.population[`${year}_change_prev`]}/?year=${year}`, {noScroll: true})}><Icon type="chevron" rotation={-90}/></button>
 				</div>
 				{/if}
 			</div>
@@ -201,8 +201,8 @@
 				{format(',.0f')(place.data.density[`${year}`])}
 				{#if count > 1}
 				<div class="btn-group">
-					<button class="btn-chevron btn-right" disabled={!place.data.density[`${year}_next`]} on:click={() => goto(`${base}/${place.data.density[`${year}_next`]}/?year=${year}`, {noscroll: true})}><Icon type="chevron" rotation={90}/></button>
-					<button class="btn-chevron btn-left" disabled={!place.data.density[`${year}_prev`]} on:click={() => goto(`${base}/${place.data.density[`${year}_prev`]}/?year=${year}`, {noscroll: true})}><Icon type="chevron" rotation={-90}/></button>
+					<button class="btn-chevron btn-right" disabled={!place.data.density[`${year}_next`]} on:click={() => goto(`${base}/${place.data.density[`${year}_next`]}/?year=${year}`, {noScroll: true})}><Icon type="chevron" rotation={90}/></button>
+					<button class="btn-chevron btn-left" disabled={!place.data.density[`${year}_prev`]} on:click={() => goto(`${base}/${place.data.density[`${year}_prev`]}/?year=${year}`, {noScroll: true})}><Icon type="chevron" rotation={-90}/></button>
 				</div>
 				{/if}
 			</div>
@@ -265,7 +265,7 @@
 			{#each [...place.parents].reverse() as parent, i}
 			<span class="parent" style:margin-left="{i == 0 ? 0 : `${(i - 1) * 20}px`}">
 				{#if i != 0}<Icon type="subdir"/>{/if}
-				<a href="{base}/{parent.areacd}/?year={year}" sveltekit:noscroll>{parent.areanm}</a>
+				<a href="{base}/{parent.areacd}/?year={year}" sveltekit:noScroll>{parent.areanm}</a>
 			</span>
 			{/each}
 			{:else}
@@ -275,7 +275,7 @@
 		<Card title="Areas in {place.areanm}">
 			{#if place.children[0]}
 			{#each place.children as child, i}
-			<a href="{base}/{child.areacd}/?year={year}" sveltekit:noscroll>{child.areanm}</a>{i == place.children.length - 1 ? '' : ', '} 
+			<a href="{base}/{child.areacd}/?year={year}" sveltekit:noScroll>{child.areanm}</a>{i == place.children.length - 1 ? '' : ', '} 
 			{/each}
 			{:else}
 			<span class="muted">No areas available within {place.areanm}</span>
