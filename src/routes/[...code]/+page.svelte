@@ -265,7 +265,7 @@
 			{#each [...place.parents].reverse() as parent, i}
 			<span class="parent" style:margin-left="{i == 0 ? 0 : `${(i - 1) * 20}px`}">
 				{#if i != 0}<Icon type="subdir"/>{/if}
-				<a href="{base}/{parent.areacd}/?year={year}" sveltekit:noScroll>{parent.areanm}</a>
+				<a href="{base}/{parent.areacd}/?year={year}" data-sveltekit-noscroll>{parent.areanm}</a>
 			</span>
 			{/each}
 			{:else}
@@ -275,7 +275,7 @@
 		<Card title="Areas in {place.areanm}">
 			{#if place.children[0]}
 			{#each place.children as child, i}
-			<a href="{base}/{child.areacd}/?year={year}" sveltekit:noScroll>{child.areanm}</a>{i == place.children.length - 1 ? '' : ', '} 
+			<a href="{base}/{child.areacd}/?year={year}" data-sveltekit-noscroll>{child.areanm}</a>{i == place.children.length - 1 ? '' : ', '} 
 			{/each}
 			{:else}
 			<span class="muted">No areas available within {place.areanm}</span>
