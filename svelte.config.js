@@ -12,10 +12,9 @@ const config = {
 			assets: 'build'
 		}),
 		prerender: {
-			default: true,
 			enabled: production,
 			entries: ['/'],
-			onError: 'continue'
+			handleHttpError: 'warn'
 		},
 		paths: {
 			base: production ? '/censusprofiles' : ''

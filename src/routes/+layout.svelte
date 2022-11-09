@@ -1,27 +1,8 @@
-<script context="module">
-	const prerender = true;
-
-  import { base } from "$app/paths";
-  import { getData } from "$lib/utils";
-  import { years } from "$lib/config";
-  
-	export async function load({ fetch }) {
-		let places = await getData(`${base}/data/csv/places.csv`, fetch);
-    places.sort((a, b) => a.areanm.localeCompare(b.areanm));
-    let lookup = {};
-		places.forEach(d => lookup[d.areacd] = d);
-
-    let res = await fetch(`${base}/data/json/K04000001.json`);
-		let ew = await res.json();
-
-		return {
-			stuff: { places, lookup, ew }
-		};
-	}
-</script>
 <script>
   import "../app.css";
   import { page } from '$app/stores';
+  import { base } from "$app/paths";
+  import { years } from "$lib/config";
 	import { setContext } from "svelte";
 	import { themes } from "$lib/config";
   import PhaseBanner from "$lib/layout/PhaseBanner.svelte";
